@@ -28,3 +28,6 @@ class CategoryListView(ListView):
     model = Category
     paginate_by = 5
 
+class SearchResultsView(ListView):
+    model = Expense
+    template_name = 'search_results.html'
