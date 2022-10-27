@@ -19,10 +19,9 @@ class ExpenseListView(ListView):
             # search by date in a range where starting date is a date from the table
             # and enddate is the current date
             date = form.cleaned_data.get('name', '')
-            startdate = datetime.strptime(date, "%Y-%m-%d")
             enddate = datetime.now().strftime("%Y-%m-%d")
             if date:
-                queryset = queryset.filter(date__range=(startdate, enddate))
+                queryset = queryset.filter(date__range=(date, enddate))
 
 
         return super().get_context_data(
