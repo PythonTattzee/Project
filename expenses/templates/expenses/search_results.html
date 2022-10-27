@@ -5,9 +5,9 @@
 <h1>Search Results</h1>
 
 <ul>
-  {% for city in object_list %}
+  {% for expense in object_list %}
     <li>
-      {{ city.name }}, {{ city.amount }}
+      {{ expense.name }}, {{ expense.amount }}
     </li>
   {% endfor %}
 </ul>
