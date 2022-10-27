@@ -3,6 +3,8 @@ from django.views.generic.list import ListView
 from .forms import ExpenseSearchForm
 from .models import Expense, Category
 from .reports import summary_per_category
+from datetime import datetime, timedelta
+
 
 
 class ExpenseListView(ListView):
@@ -14,13 +16,14 @@ class ExpenseListView(ListView):
 
         form = ExpenseSearchForm(self.request.GET)
         if form.is_valid():
-            # amount = form.cleaned_data.get('name', '')
+            # search by date in a range where starting date is a date from the table
+            # and enddate is the current date
             date = form.cleaned_data.get('name', '')
-            # if amount:
-            #     queryset = queryset.filter(amount=amount)
-            # searching by date YYYY-MM-DD
+            startdate = datetime.strptime(date, "%Y-%m-%d")
+            enddate = datetime.now().strftime("%Y-%m-%d")
             if date:
-                queryset = queryset.filter(date=date)
+                queryset = queryset.filter(date__range=(startdate, enddate))
+
 
         return super().get_context_data(
             form=form,
