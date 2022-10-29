@@ -2,7 +2,11 @@
 
 {% block content %}
 <a href="{% url 'expenses:category-create' %}">add</a>
-
+<form method="get" action="">
+  {{filter.form.as_p}}
+  <button type="submit">search</button>
+</form>
+<br>
 <table border="1">
 	<thead>
 		<tr>
@@ -11,7 +15,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for obj in object_list %}
+		{% for obj in filter.qs %}
 		<tr>
 			<td>
 				{{obj.name}}

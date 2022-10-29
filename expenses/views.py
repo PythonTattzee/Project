@@ -1,10 +1,10 @@
 from django.views.generic.list import ListView
 
-from .forms import ExpenseSearchForm
+from .forms import ExpenseSearchForm, CategoriesSearchForm
 from .models import Expense, Category
 from .reports import summary_per_category
-from datetime import datetime, timedelta
-
+from datetime import datetime
+from .filters import CategoryFilter
 
 
 class ExpenseListView(ListView):
@@ -33,6 +33,12 @@ class ExpenseListView(ListView):
 class CategoryListView(ListView):
     model = Category
     paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = CategoryFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+
 
 class SearchResultsView(ListView):
     model = Expense
